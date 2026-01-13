@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CheckerText</title>
+    <link rel="stylesheet" href="/web/styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Word Phrase Checker</h1>
+            <p class="sub">
+                Nhập danh sách cụm từ (mỗi dòng 1 cụm), upload file <b>.docx</b>, rồi bấm Check.
+            </p>
+        </header>
+
+        <section class="card">
+            <div class="grid">
+                <div>
+                    <label for="phrases">Các cụm từ cần check (mỗi dòng 1 cụm)</label>
+                    <textarea id="phrases" placeholder="Ví dụ:
+H001QN2500001
+2500007
+ABC-123"></textarea>
+
+                    <div class="options">
+                        <label class="chk">
+                            <input id="caseSensitive" type="checkbox" />
+                            Phân biệt hoa/thường
+                        </label>
+                        <label class="chk">
+                            <input id="wholeWord" type="checkbox" />
+                            Match whole word (cẩn thận với cụm có ký tự đặc biệt)
+                        </label>
+                        <label class="chk">
+                            <input id="scanHF" type="checkbox" checked />
+                            Quét cả header/footer
+                        </label>
+
+                        <label class="chk">
+                            <input id="spellcheckVi" type="checkbox" />
+                            Kiểm tra nghi lỗi chính tả tiếng Việt (fuzzy)
+                        </label>
+                        <label class="chk" style="display: none;">
+                            <input id="checkDuToanRule" type="checkbox" />
+                            Check dự toán mua sắm (bắt buộc “dự toán mua sắm: mua sắm”)
+                        </label>
+
+                        <label class="chk" style="gap:8px;">
+                            Ngưỡng fuzzy (1-3):
+                            <input id="spellMaxDist" type="number" min="1" max="3" value="2" style="width:70px;" />
+                        </label>
+
+                        <button id="btnClearSaved" type="button">Xoá cụm từ đã lưu</button>
+                    </div>
+
+                </div>
+
+                <div>
+                    <label for="file">Upload file Word (.docx)</label>
+                    <!-- <input id="file" type="file" accept=".docx" /> -->
+                    <input id="file" type="file" accept=".doc,.docx" />
+
+                    <button id="btnCheck">Check</button>
+
+                    <div id="status" class="status"></div>
+
+                    <div class="hint">
+                        <b>Lưu ý:</b> “Trang” và “dòng” là ước lượng theo Page Break / Line Break trong DOCX.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="card">
+            <h2>Kết quả</h2>
+
+            <div id="summary" class="summary"></div>
+            <div id="alerts" class="alerts"></div>
+
+            <div class="toolbar">
+                <input id="search" placeholder="Lọc theo cụm từ..." />
+                <button id="btnDownloadJson" disabled>Tải JSON</button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cụm từ</th>
+                            <th>Trạng thái</th>
+                            <th>Số lần</th>
+                            <th>Chi tiết (trang/dòng/đoạn...)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <tr>
+                            <td colspan="4" class="muted">Chưa có dữ liệu.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <span class="muted">Local app • FastAPI + python-docx</span>
+        </footer>
+    </div>
+
+    <script src="/web/app.js"></script>
+</body>
+
+</html>
